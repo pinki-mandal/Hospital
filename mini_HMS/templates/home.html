@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}  {% block content %}
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <span class="text-uppercase fw-bold text-primary tracking-wide medium-font">
+                    <i class="bi bi-activity me-1"></i> Hospital Management System
+                </span>
+    
+                
+           
+                <p class="hero-subtitle">
+                    A secure platform for managing doctor availability and patient appointments.
+                    Featuring <strong>Google Calendar Sync</strong> and real-time slot blocking to prevent double-booking.
+                </p>
+
+                <div class="d-flex gap-3 flex-wrap">
+                    {% if user.is_authenticated %}
+                        {% if user.is_doctor %}
+                            <a href="{% url 'doctor_dashboard' %}" class="btn btn-nav">
+                                <i class="bi bi-speedometer2 me-2"></i>Doctor Dashboard
+                            </a>
+                            <button class="btn btn-primary-outline" data-bs-toggle="modal" data-bs-target="#addSlotModal">
+                                <i class="bi bi-plus-circle me-2"></i>Add Availability
+                            </button>
+                        {% else %}
+                            <a href="{% url 'patient_dashboard' %}" class="btn btn-nav">
+                                <i class="bi bi-calendar-check me-2"></i>My Appointment
+                            </a>
+                            <a href="{% url 'patient_dashboard' %}" class="btn btn-nav">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="#" class="btn btn-success-outline" data-bs-toggle="modal" data-bs-target="#loginModal">I am a Patient</a>
+                        <a href="#" class="btn btn-primary-outline" data-bs-toggle="modal" data-bs-target="#loginModal">I am a Doctor</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center position-relative">
+                <div class="blob-background"></div>
+                
+                <img src="{% static 'doctor.png' %}" 
+                     alt="Doctor" 
+                     class="img-fluid rounded-4 shadow-lg hero-img-doctor">
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h6 class="text-primary fw-bold text-uppercase">Core Features</h6>
+            <h2 class="fw-bold mb-3">Why Choose Mini HMS?</h2>
+            <p class="text-muted col-lg-6 mx-auto">
+                Built with efficiency and security in mind.
+                Our system handles role-based access for doctors and patients seamlessly.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% include 'appointments/add_availability.html' %}
+{% endblock %}
